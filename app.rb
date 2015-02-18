@@ -11,6 +11,8 @@ class CityGram < Sinatra::Base
   include Search
 
   Tilt.register Tilt::ERBTemplate, 'html.erb'
+  set :static, true
+  set :public_folder, File.expand_path(File.dirname(__FILE__)) + '/public'
 
   initialize_instagram
   
