@@ -27,6 +27,11 @@
 
   <div ng-controller='SearchCtrl as home' id='events_holder' class='row'>
     <h3>{{home.site_title}}</h3>
+    <form>
+    <label>Search City</label>
+      <input ng-model='home.search'>
+      <input type='submit' value='save' ng-click='home.fetch_data(home.search)'>
+    </form>
   </div>
 
   <button>Go</button>
