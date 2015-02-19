@@ -8,6 +8,7 @@ CityGram.controller('SearchCtrl', ['$scope', 'Pictures','IGResults', function Se
   site_home.site_title = "Welcome to IG City Search";
   
   $scope.set_pic_data = function(items) {
+    console.log(IGResults.data)
     $scope.picture_results = IGResults.data;
   }
 
