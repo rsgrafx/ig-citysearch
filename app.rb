@@ -29,9 +29,6 @@ class CityGram < Sinatra::Base
 
   # http -f POST localhost:9393/recent_pics? [place]street_address='San Ignacio Town, Belize'
   post '/recent_pictures' do
-    # require 'pry'
-    # binding.pry
-
     content_type :json
     json search(params[:place])
   end
