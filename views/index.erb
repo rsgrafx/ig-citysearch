@@ -25,18 +25,23 @@
     </ul>
   </nav>
 
-  <div ng-controller='SearchCtrl as home' id='events_holder' class='row'>
-    <h3>{{home.site_title}}</h3>
+  <div ng-controller='SearchCtrl' id='events_holder' class='row'>
+    <h3>{{site_title}}</h3>
     <form>
     <label>Search City</label>
-      <input ng-model='home.search'>
-      <input type='submit' value='save' ng-click='home.fetch_data(home.search)'>
+      <input ng-model="home.search" type="text" autofocus="autofocus" class="form-control" googleplace class='large-8'>
     </form>
+
+    <div ng-repeat='pic in picture_results'>
+      <a ng-href={{pic.link}}> {{pic.caption.text}} </a>
+    </div>
   </div>
 
   <button>Go</button>
+  <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&language=en"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.13/angular.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.13/angular-route.min.js'></script> 
   <script src='javascript/app.js'></script>
+  <script src='javascript/directives.js'></script>
 </body>
 </html>
