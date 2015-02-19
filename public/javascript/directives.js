@@ -46,7 +46,7 @@ angular.module('locations.google', ['ig.citysearch.factories'])
                         // var address = { city: current_city.formatted_address }
                         Pictures.fetch(address).success( function(data) {
                               IGResults.data = data;
-
+                              setTimeout(function(data) { scope.$apply(scope.set_pic_data(data)) }, 1000);
                         })
                     });
                 }
