@@ -28,6 +28,7 @@
   <div ng-controller='SearchCtrl' id='events_holder' class='row'>
     <h3>{{site_title}}</h3>
     <form>
+    
     <label>Search City</label>
       <input ng-model="home.search" type="text" autofocus="autofocus" class="form-control" googleplace class='large-8'>
     </form>
@@ -37,7 +38,6 @@
     </div>
   </div>
 
-  <button>Go</button>
   <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&language=en"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.13/angular.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.13/angular-route.min.js'></script> 

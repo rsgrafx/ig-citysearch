@@ -37,16 +37,20 @@ angular.module('locations.google', ['ig.citysearch.factories'])
                           }
                         }
                         currentCity.setProperty(current_city);
+
                         var address = { 
                             place: {
                               street_address: current_city.formatted_address
                             }
                           }
+                        // var address = { city: current_city.formatted_address }
                         Pictures.fetch(address).success( function(data) {
-                          IGResults.data = data;
+                              IGResults.data = data;
+
                         })
                     });
                 }
+
     }
 }])
 .service('IGResults', function() {
