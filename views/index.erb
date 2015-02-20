@@ -2,48 +2,7 @@
 <head>
   <title>City Gram + Search Proof of Concept</title>
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.0/css/foundation.css">
-  <style type="text/css">
-  .event-card {
-    margin: 20px;
-    box-shadow: 3px 3px 5px #ddd;
-    float: left;
-  }
-  .event-card h3 {
-    font-weight: bold;
-  }
-  .description {
-    padding: 5px;
-    color: #333;
-  }
-  .ig-card {
-    float: left;
-    margin: 5px;
-    min-height: 100px;
-    height: 165px;
-    padding: 1px;
-    background-color: rgba(0,0,0, 0.2);
-  }
-  .ig-card span.hover-image-details {
-    display: none;
-    visibility: hidden;
-  }
-  .ig-card:hover span.hover-image-details {
-    visibility: visible;
-    display: block;
-    background: rgba(0,0,0, 0.7);
-    color: #fff;
-    position: relative;
-    overflow: scroll;
-    top:;
-    bottom: 30px;
-    height: 30px;
-  }
-
-  .ig-list {
-    clear: both;
-    text-align: center;
-  }
-  </style>
+  <link rel="stylesheet" type="text/css" href="stylesheets/app.css">
 
 </head>
 <body ng-app='CityGram'>
@@ -62,28 +21,53 @@
           <input ng-model="home.search" type="text" autofocus="autofocus" class="form-control" googleplace>
         </label>
       </div>
-<!--       <div class='large-4 columns pull-4'>
-        <label>#HashSearch
-          <input ng-model="home.searchHash" type="text" autofocus="autofocus" class="form-control">
-        </label>
-      </div> -->
     </form>
 
     <div class='row ig-list'>
       <div ng-repeat='pic in picture_results' class='ig-card large-2 small-8'>
         <img ng-src={{pic.images.low_resolution.url}} />
+
+            <span class='eye'>
+              <a href="#" data-reveal-id="firstModal" ng-click=individualIGimage(pic.id)>
+                <small>Click</small></a>
+            </span>
+
         <span class='hover-image-details'>
-          <small class='.text-left'><a ng-href={{pic.link}}> {{pic.caption.text}} </a></small>
-        </span>
+          <small class='.text-left'>
+            <a href='#' data-reveal-id="firstModal" ng-click=individualIGimage(pic.id) > {{pic.caption.text}} </a></small>
+          </span>
       </div>
     </div> 
+
+    <div id="firstModal" class="reveal-modal" data-reveal>
+      <div class="row">
+        <div class="large-8 columns">
+          <img ng-src={{loadedImage.images.standard_resolution.url}} />
+        </div>
+        <div class="large-4 columns">
+            <img ng-src={{loadedImage.user.profile_picture}} class='profile_picture' />
+            <h4 class='subheader'>
+                {{loadedImage.user.full_name}}
+            </h4>
+          <p>{{loadedImage.caption.text}}</p>
+        </div>
+    </div>
+      <a class="close-reveal-modal">&#215;</a>
+    </div>
+
+<!-- end of controller div.  -->
   </div>
 
-  <!-- <button>Go</button> -->
-  <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&language=en"></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.13/angular.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.13/angular-route.min.js'></script> 
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.0/js/foundation.min.js'></script>
   <script src='javascript/app.js'></script>
   <script src='javascript/directives.js'></script>
+  <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&language=en"></script>
+
+  <script>
+      $(document).foundation();
+  </script>
 </body>
 </html>

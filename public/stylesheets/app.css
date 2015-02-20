@@ -1,0 +1,57 @@
+p {
+  word-wrap: break-word;
+  overflow: hidden;
+}
+.profile_picture {
+  width:40px;
+}
+.event-card {
+  margin: 20px;
+  box-shadow: 3px 3px 5px #ddd;
+  float: left;
+}
+.event-card h3 {
+  font-weight: bold;
+}
+.description {
+  padding: 5px;
+  color: #333;
+}
+.ig-card {
+  float: left;
+  margin: 5px;
+  min-height: 100px;
+  height: 165px;
+  padding: 1px;
+  background-color: rgba(0,0,0, 0.2);
+}
+.ig-card span.eye {
+  visibility: visible;
+  display: block;
+  background: rgba(0,0,0, 0.7);
+  color: #fff;
+  position: relative;
+  overflow: scroll;
+  bottom: 170px;
+  width: 30px;
+  right: 0;
+}
+.ig-card span.hover-image-details {
+  display: none;
+  visibility: hidden;
+}
+.ig-card:hover span.hover-image-details {
+  visibility: visible;
+  display: block;
+  background: rgba(0,0,0, 0.7);
+  color: #fff;
+  position: relative;
+  overflow: scroll;
+  bottom: 50px;
+  height: 30px;
+}
+
+.ig-list {
+  clear: both;
+  text-align: center;
+}

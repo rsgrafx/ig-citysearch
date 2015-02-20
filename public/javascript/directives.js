@@ -30,23 +30,23 @@ angular.module('locations.google', ['ig.citysearch.factories'])
 
                         var current_city = {
                           name: place.name,
-                          formatted_address: place.formatted_address,
-                          location: {
-                            lat: place.geometry.location.lb,
-                            lng: place.geometry.location.mb
-                          }
+                          formatted_address: place.formatted_address
+                          // ,location: {
+                          //   lat: place.geometry.location.lb,
+                          //   lng: place.geometry.location.mb
+                          // }
                         }
                         currentCity.setProperty(current_city);
-
+                        console.log(current_city)
                         var address = { 
                             place: {
                               street_address: current_city.formatted_address
                             }
                           }
                         // var address = { city: current_city.formatted_address }
-                        Pictures.fetch(address).success( function(data) {
-                              IGResults.data = data;
-                              setTimeout(function(data) { scope.$apply(scope.set_pic_data(data)) }, 1000);
+                        Pictures.fetch(address).success( function(response) {
+                              IGResults.data = response
+                              setTimeout(function(response) { scope.$apply(scope.set_pic_data(response)) }, 1000);
                         })
                     });
                 }
@@ -65,7 +65,6 @@ angular.module('locations.google', ['ig.citysearch.factories'])
                 lng: ""
             }
         }
-
         return {
             getProperty: function () {
                 return current_city;
@@ -74,4 +73,26 @@ angular.module('locations.google', ['ig.citysearch.factories'])
                 current_city = value;
             }
         };
-    });
+})
+.directive('compile', ['$compile', function($compile) {
+
+    return function(scope, element, attrs) {
+      scope.$watch(
+        function(scope) {
+          // watch the 'compile' expression for changes
+          // return scope.$eval(attrs.myCompileUnsafe);
+          return scope.$eval(attrs.compile);
+        },
+        function(value) {
+          // when the 'compile' expression changes
+          // assign it into the current DOM element
+          element.html(value);
+          // compile the new DOM and link it to the current
+          // scope.
+          // NOTE: we only compile .childNodes so that
+          // we don't get into infinite loop compiling ourselves
+          $compile(element.contents())(scope);
+        }
+      );
+    };
+  }]);
