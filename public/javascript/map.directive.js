@@ -18,16 +18,11 @@ CityGram.directive('map', function() {
         document.Coords.lat = value;
         return initialize();
       });
-      
-      document.Coords = {}
 
+      document.Coords = {}
       initialize = function(lat, long) {
         var map, map_canvas, map_options;
         map_canvas = document.getElementById("map_canvas");
-
-          console.log('Insdie fucntion');
-          console.log(document.Coords.lat);
-          console.log('OUTSIDE fucntion');
 
         map_options = {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -36,10 +31,7 @@ CityGram.directive('map', function() {
         };
         return map = new google.maps.Map(map_canvas, map_options);
       };
-
       google.maps.event.addDomListener(window, 'load', initialize);
-      return document.Coords.data = scope;
-
     }
   };
 });

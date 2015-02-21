@@ -22,8 +22,7 @@ CityGram.controller('SearchCtrl', ['$scope', '$filter', 'Pictures','IGResults', 
     $scope.updateMap();
 
     google.maps.event.addDomListener(window, 'load', $scope.updateMap);
-    return document.Coords.data = scope;
-
+    // return document.Coords.data = scope;
   }
 
   $scope.updateCoords = function() {
@@ -33,13 +32,21 @@ CityGram.controller('SearchCtrl', ['$scope', '$filter', 'Pictures','IGResults', 
 
   $scope.updateMap = function(lat, long) {
       var map, map_canvas, map_options;
+
       map_canvas = document.getElementById("map_canvas");
         map_options = {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           center: new google.maps.LatLng(document.Coords.lat, document.Coords.long),
-          zoom: 15
+          zoom: 16
         }
-    return map = new google.maps.Map(map_canvas, map_options);
+
+    var map = new google.maps.Map(map_canvas, map_options);
+
+    var marker = new google.maps.Marker({
+      position: map_options.center,
+      map: map,
+      title: '#mapped'
+    })
   };
 
 
