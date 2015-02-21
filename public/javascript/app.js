@@ -46,6 +46,8 @@ CityGram.controller('SearchCtrl', ['$scope', '$filter', 'Pictures','IGResults', 
     $scope.setupPagination($scope.picture_results[PaginationItem.previousId]);
     console.log(PaginationItem);
     $scope.loadedImage = PaginationItem.imgObj;
+    $scope.paginationMap();
+    $scope.updateMap();
   }
 
   $scope.paginationMap = function() {
@@ -54,10 +56,12 @@ CityGram.controller('SearchCtrl', ['$scope', '$filter', 'Pictures','IGResults', 
   }
 
   $scope.nextItem = function() {
-    console.log(PaginationItem);
     $scope.setupPagination($scope.picture_results[PaginationItem.nextId]);
-    console.log(PaginationItem);
+    // console.log(PaginationItem);
     $scope.loadedImage = PaginationItem.imgObj;
+
+    $scope.paginationMap();
+    $scope.updateMap();
 
   }
 
@@ -66,14 +70,14 @@ CityGram.controller('SearchCtrl', ['$scope', '$filter', 'Pictures','IGResults', 
     document.Coords.long = $scope.loadedImage.location.longitude;
   }
 
-  $scope.updateMap = function(lat, long) {
+  $scope.updateMap = function() {
       var map, map_canvas, map_options;
 
       map_canvas = document.getElementById("map_canvas");
         map_options = {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           center: new google.maps.LatLng(document.Coords.lat, document.Coords.long),
-          zoom: 10
+          zoom: 15
         }
     var map = new google.maps.Map(map_canvas, map_options);
     var marker = new google.maps.Marker({
