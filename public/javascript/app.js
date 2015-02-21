@@ -9,20 +9,16 @@ CityGram.controller('SearchCtrl', ['$scope', '$filter', 'Pictures','IGResults', 
 
 
   $scope.set_pic_data = function(items) {
-    console.log(IGResults.data);
     $scope.picture_results = IGResults.data;
   }
 
   $scope.individualIGimage = function(itemId) {
     var loadedImage = $filter('getbyProperty')('id', itemId, $scope.picture_results)
     $scope.loadedImage = loadedImage;
-    console.log($scope.loadedImage)
 
     $scope.updateCoords();
     $scope.updateMap();
 
-    google.maps.event.addDomListener(window, 'load', $scope.updateMap);
-    // return document.Coords.data = scope;
   }
 
   $scope.updateCoords = function() {
@@ -37,7 +33,7 @@ CityGram.controller('SearchCtrl', ['$scope', '$filter', 'Pictures','IGResults', 
         map_options = {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           center: new google.maps.LatLng(document.Coords.lat, document.Coords.long),
-          zoom: 16
+          zoom: 14
         }
 
     var map = new google.maps.Map(map_canvas, map_options);
@@ -47,6 +43,7 @@ CityGram.controller('SearchCtrl', ['$scope', '$filter', 'Pictures','IGResults', 
       map: map,
       title: '#mapped'
     })
+    google.maps.event.addDomListener(window, 'load', $scope.updateMap);
   };
 
 
