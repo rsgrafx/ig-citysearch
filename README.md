@@ -1,9 +1,9 @@
 
 # IG-City Search.
 
-I got inspired go do this after seeing - by Coordstagram [here's a demo coordstagram app](http://gowanus.herokuapp.com/) on hacker news. Coordstagram which is a Rails application.  Doing a lot of cool things. 
+I got inspired go do this after seeing - by Coordstagram [here's a demo coordstagram app](http://gowanus.herokuapp.com/) on hacker news. Coordstagram which is a Rails application does a lot of cool things. But for me most of the functionality being demo'd was based on the client side why not go with a backend service and move the heavy lifting to client side tech. 
 
-This is a Sinatra and AngularJS that queries the Instagram API - for images based on a location. The location is parsed. the coordinates are passed to instagram api.and the media elements are returned.  ( Nothing is stored ) This was mainly for me to relearn a bit of angular - by reimplementing some of the functionality in Coordstagram.
+This is a Sinatra and AngularJS that queries the Instagram API - for images based on a location. The location is parsed. the coordinates are passed to instagram api.and the media elements are returned.  ( Nothing is stored ) This was mainly for me to relearn a bit of angular - by reimplementing some of the functionality I found Coordstagram.
 
 ( Angular is Awesome in my opinion )  So I figured why not.
 
