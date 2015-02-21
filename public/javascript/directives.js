@@ -11,9 +11,16 @@ angular.module('ig.citysearch.factories', []).factory('Pictures', ['$http', '$q'
       })
     }
   }
-
   return pics;
 }])
+.factory('PaginationItem', function() {
+  return {
+    imageObj: '',
+    nextId: '',
+    previousId: '',
+    currentId: ''
+  }
+})
 
 angular.module('locations.google', ['ig.citysearch.factories'])
     .directive('googleplace', ['currentCity' ,'Pictures','IGResults', '$location', '$http',
