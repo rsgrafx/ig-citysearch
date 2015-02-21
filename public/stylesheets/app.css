@@ -69,3 +69,14 @@ p.caption {
   height: 300px; 
   width: 300px;
 }
+.next {
+  position: relative;
+  right: -60px;
+  float: right;
+  top: 200px;
+}
+.previous {
+  position: relative;
+  left: -60px;
+  top: 200px;
+}

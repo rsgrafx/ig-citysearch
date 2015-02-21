@@ -88,7 +88,6 @@ CityGram.controller('SearchCtrl', ['$scope', '$filter', 'Pictures','IGResults', 
     google.maps.event.addDomListener(window, 'load', $scope.updateMap);
   };
 
-
   site_home.fetch_data = function(content) {
     window.navigator.geolocation.getCurrentPosition(
       function(position) {
