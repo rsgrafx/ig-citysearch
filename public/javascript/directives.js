@@ -65,6 +65,7 @@ angular.module('locations.google', ['ig.citysearch.factories'])
                 lng: ""
             }
         }
+
         return {
             getProperty: function () {
                 return current_city;
