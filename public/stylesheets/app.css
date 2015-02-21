@@ -2,11 +2,18 @@ p {
   word-wrap: break-word;
   overflow: hidden;
 }
+p.caption {
+  color: cadetblue;
+  font-size: 0.8em;
+  margin: 30px auto;
+}
 
 .profile_picture {
   width:40px;
   margin-right: 10px;
   float:left;
+  border-radius: 3px;
+  border-radius: 5px;
 }
 .event-card {
   margin: 20px;
@@ -36,7 +43,7 @@ p {
   position: relative;
   overflow: scroll;
   bottom: 170px;
-  width: 30px;
+  width: inherit;
   right: 0;
 }
 .ig-card span.hover-image-details {

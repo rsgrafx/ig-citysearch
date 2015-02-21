@@ -27,13 +27,12 @@
 
     <div class='row ig-list'>
       <div ng-repeat='pic in picture_results' class='ig-card large-2 small-8'>
-        <img ng-src={{pic.images.low_resolution.url}} />
-
-            <span class='eye'>
-              <a href="#" data-reveal-id="firstModal" ng-click=individualIGimage(pic.id)>
-                <small>Click</small></a>
+        <a href="#" data-reveal-id="iGModal" ng-click=individualIGimage(pic.id)>
+          <img ng-src={{pic.images.low_resolution.url}} />
+            <span class='eye'>              
+              <small>@{{pic.user.username}}.</small>
             </span>
-
+          </a>
         <span class='hover-image-details'>
           <small class='.text-left'>
             <a href='#' data-reveal-id="firstModal" ng-click=individualIGimage(pic.id) > {{pic.caption.text}} </a></small>
@@ -41,7 +40,7 @@
       </div>
     </div> 
 
-    <div id="firstModal" class="reveal-modal" data-reveal>
+    <div id="iGModal" class="reveal-modal" data-reveal>
       <div class="row">
         <div class="large-8 columns">
           <img ng-src={{loadedImage.images.standard_resolution.url}} />
@@ -51,7 +50,7 @@
             <h4 class='subheader'>
                 {{loadedImage.user.username}}
             </h4>
-          <p>{{loadedImage.caption.text}}</p>
+          <p class='caption'>{{loadedImage.caption.text}}</p>
         </div>
         <div map></div>
     </div>
