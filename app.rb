@@ -33,4 +33,8 @@ class CityGram < Sinatra::Base
     json search(params[:place])
   end
 
+  post '/location_name' do
+    json coords: params[:coords]
+  end
+
 end

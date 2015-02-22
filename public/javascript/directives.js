@@ -9,6 +9,14 @@ angular.module('ig.citysearch.factories', []).factory('Pictures', ['$http', '$q'
         method: 'POST',
         headers: 'Content-Type: application/json'
       })
+    },
+    location_name: function(coords) {
+      return $http({
+        url: '/location_name',
+        data: JSON.stringify(coords),
+        method: 'POST',
+        headers: 'Content-Type: application/json'
+      })
     }
   }
   return pics;
@@ -28,8 +36,7 @@ angular.module('locations.google', ['ig.citysearch.factories'])
     return {
         link: function(scope, element, attrs) {
                     var options = {
-                        types: ['(cities)'],
-                        componentRestrictions: {}
+                        types: ['(cities)']
                     };
                     scope.gPlace = new google.maps.places.Autocomplete(element[0], options);
                     google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
@@ -37,20 +44,18 @@ angular.module('locations.google', ['ig.citysearch.factories'])
 
                         var current_city = {
                           name: place.name,
-                          formatted_address: place.formatted_address
-                          // ,location: {
-                          //   lat: place.geometry.location.lb,
-                          //   lng: place.geometry.location.mb
-                          // }
+                          formatted_address: place.formatted_address,
+                          location: {
+                            lat: place.geometry.location.lb,
+                            lng: place.geometry.location.mb
+                          }
                         }
                         currentCity.setProperty(current_city);
-                        console.log(current_city)
                         var address = { 
                             place: {
                               street_address: current_city.formatted_address
                             }
                           }
-                        // var address = { city: current_city.formatted_address }
                         Pictures.fetch(address).success( function(response) {
                               IGResults.data = response
                               setTimeout(function(response) { scope.$apply(scope.set_pic_data(response)) }, 1000);
