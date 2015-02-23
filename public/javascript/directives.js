@@ -51,14 +51,16 @@ angular.module('locations.google', ['ig.citysearch.factories'])
                           }
                         }
                         currentCity.setProperty(current_city);
-                        var address = { 
+                        var address = {
+                            title: current_city.formatted_address,
                             place: {
                               street_address: current_city.formatted_address
                             }
                           }
                         Pictures.fetch(address).success( function(response) {
-                              IGResults.data = response
-                              setTimeout(function(response) { scope.$apply(scope.set_pic_data(response)) }, 1000);
+                              IGResults.data = response;
+                              IGResults.location_title = current_city.formatted_address;
+                              setTimeout(function(response) { scope.$apply(scope.set_pic_data()) }, 500);
                         })
                     });
                 }
@@ -66,7 +68,7 @@ angular.module('locations.google', ['ig.citysearch.factories'])
     }
 }])
 .service('IGResults', function() {
-  return { data: '' }
+  return { data: '', location_title: '' }
 })
 .service('currentCity', function () {
         var current_city = {

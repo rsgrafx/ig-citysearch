@@ -13,21 +13,28 @@
     <ul class='title-area'>
       <li class='name'><h1><a href="#">City Gram</a></h1></li>
     </ul>
+
+    <section class='top-bar-section' ng-controller='NavSearchCtrl'>
+      <ul>
+      <li  class='large-5 push-2' >
+        <form id='place_search' >
+          <input ng-model='search' type='text' autofocus='autofocus' googleplace >
+        </form>
+      </li>
+      </ul>
+    </section>
   </nav>
 
   <div ng-controller='SearchCtrl' id='events_holder' class='row'>
-    <h3>{{site_title}}</h3>
-
     <form>
-      <div class='large-10 columns'>
-        <label> <h4>Search a City.  See what people are Instagramming.</h4>
-          <input ng-model="home.search" type="text" autofocus="autofocus" class="form-control" googleplace>
+      <div class='large-12 columns'>
+        <label> <h4>Instagrams Near: {{ location_title }}</h4>
         </label>
       </div>
     </form>
 
     <div class='row ig-list'>
-      <div ng-repeat='pic in picture_results' class='ig-card large-2 small-8'>
+      <div ng-repeat='pic in picture_results' class='ig-card large-2 small-10'>
         <a href="#" data-reveal-id="iGModal" ng-click=individualIGimage(pic.id)>
           <img ng-src={{pic.images.low_resolution.url}} />
             <span class='eye'>              

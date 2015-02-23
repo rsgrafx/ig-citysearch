@@ -2,13 +2,25 @@
 
 var CityGram = angular.module('CityGram', ['locations.google', 'ig.citysearch.factories']);
 
-CityGram.controller('SearchCtrl', ['$scope', '$filter', 'Pictures','IGResults', 'PaginationItem', 
-  function SearchCtrl($scope, $filter, Pictures, IGResults, PaginationItem) {
-  $scope.picture_results = null;
-  var site_home = this;
-  site_home.site_title = "Welcome to IG City Search";
+CityGram.controller('NavSearchCtrl', ['$scope', 'IGResults', function($scope, IGResults) {
+  var container = this;
+  console.log(container.search)
 
-  $scope.set_pic_data = function(items) {
+  $scope.set_pic_data = function() {
+    console.log('Sharing Data.')
+  }
+}])
+
+CityGram.controller('SearchCtrl', 
+
+  ['$scope', '$filter', 'Pictures','IGResults', 'PaginationItem',function SearchCtrl($scope, $filter, Pictures, IGResults, PaginationItem) {
+
+  $scope.picture_results = null;
+  $scope.location_title = '';
+  var site_home = this;
+
+  $scope.set_pic_data = function() {
+    $scope.location_title = IGResults.location_title;
     $scope.picture_results = IGResults.data;
   }
 
@@ -54,12 +66,9 @@ CityGram.controller('SearchCtrl', ['$scope', '$filter', 'Pictures','IGResults', 
 
   $scope.nextItem = function() {
     $scope.setupPagination($scope.picture_results[PaginationItem.nextId]);
-    // console.log(PaginationItem);
     $scope.loadedImage = PaginationItem.imgObj;
-
     $scope.paginationMap();
     $scope.updateMap();
-
   }
 
   $scope.updateCoords = function() {
@@ -108,7 +117,8 @@ CityGram.controller('SearchCtrl', ['$scope', '$filter', 'Pictures','IGResults', 
 
             geocoder.geocode({'latLng': latLng}, function(results, status) {
               if(status==google.maps.GeocoderStatus.OK) {
-                address.place.street_address = (results[1].formatted_address)
+                console.log(results)
+                address.place.street_address = (results[0].formatted_address)
               }
             })
             return address;
@@ -117,20 +127,19 @@ CityGram.controller('SearchCtrl', ['$scope', '$filter', 'Pictures','IGResults', 
           getCityfromLatLong(address)
 
           Pictures.fetch(address).success( function(data, status, headers, config) {
+            $scope.location_title = address.place.street_address;
+            console.log(address)
+            IGResults.location_title = address.place.street_address;
             IGResults.data = data;
-            console.log(data)
-            console.log(status)
-            console.log(headers)
-            console.log(config)
-            setTimeout(function(data) { $scope.$apply($scope.set_pic_data(data)) }, 1000);
+            setTimeout(function(data) { $scope.$apply($scope.set_pic_data()) }, 500);
           })
         })
 
     });
   
   }
-
   $scope.fetch_initial_data()
+  $scope.$watch($scope.set_pic_data)
 }])
 .filter('getbyProperty', function() {
   /*
