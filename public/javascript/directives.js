@@ -5,7 +5,7 @@ angular.module('ig.citysearch.factories', []).factory('Pictures', ['$http', '$q'
     fetch: function(address) {
       return $http({ 
         url: '/recent_pictures', 
-        data: JSON.stringify(address),
+        data: address,//JSON.stringify(address),
         method: 'POST',
         headers: 'Content-Type: application/json'
       })

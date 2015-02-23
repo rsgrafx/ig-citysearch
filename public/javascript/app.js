@@ -108,9 +108,7 @@ CityGram.controller('SearchCtrl', ['$scope', '$filter', 'Pictures','IGResults', 
 
             geocoder.geocode({'latLng': latLng}, function(results, status) {
               if(status==google.maps.GeocoderStatus.OK) {
-                console.log(results);
                 address.place.street_address = (results[1].formatted_address)
-                console.log(results[0])
               }
             })
             return address;
@@ -118,9 +116,13 @@ CityGram.controller('SearchCtrl', ['$scope', '$filter', 'Pictures','IGResults', 
 
           getCityfromLatLong(address)
 
-          Pictures.fetch(address).success( function(response) {
-            IGResults.data = response;
-            setTimeout(function(response) { $scope.$apply($scope.set_pic_data(response)) }, 1000);
+          Pictures.fetch(address).success( function(data, status, headers, config) {
+            IGResults.data = data;
+            console.log(data)
+            console.log(status)
+            console.log(headers)
+            console.log(config)
+            setTimeout(function(data) { $scope.$apply($scope.set_pic_data(data)) }, 1000);
           })
         })
 
