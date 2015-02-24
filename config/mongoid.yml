@@ -20,7 +20,6 @@ production:
   sessions:
     default:
       uri: <%= ENV['MONGOLAB_URI'] %>
-    database: city_gram_production
     options:
       skip_version_check: true
       safe: true
