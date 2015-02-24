@@ -4,7 +4,7 @@ var CityGram = angular.module('CityGram', ['locations.google', 'ig.citysearch.fa
 
 CityGram.controller('NavSearchCtrl', ['$scope', 'IGResults', function($scope, IGResults) {
   var container = this;
-  console.log(container.search)
+  // console.log(container.search)
 
   $scope.set_pic_data = function() {
     console.log('Sharing Data.')
@@ -97,6 +97,7 @@ CityGram.controller('SearchCtrl',
   $scope.fetch_initial_data = function() {
     window.navigator.geolocation.getCurrentPosition( function(position) {
         $scope.$apply(function() {
+
           site_home.position = position; console.log(position)
           var geocoder, address;
 
@@ -105,10 +106,11 @@ CityGram.controller('SearchCtrl',
             longitude: position.coords.longitude
           }
 
-          address = { place: { 
-            street_address: '',
-            coordinates: coords
-            } 
+          var address = { 
+            place: { 
+              street_address: '',
+              coordinates: coords
+              }
           }
 
           function getCityfromLatLong(address) {
@@ -117,20 +119,30 @@ CityGram.controller('SearchCtrl',
 
             geocoder.geocode({'latLng': latLng}, function(results, status) {
               if(status==google.maps.GeocoderStatus.OK) {
-                console.log(results)
-                address.place.street_address = (results[0].formatted_address)
+                address.place.street_address = results[0].formatted_address;
               }
             })
-            return address;
           }
 
           getCityfromLatLong(address)
 
           Pictures.fetch(address).success( function(data, status, headers, config) {
             $scope.location_title = address.place.street_address;
-            console.log(address)
             IGResults.location_title = address.place.street_address;
             IGResults.data = data;
+
+            var search = {
+              location: {
+                city_name: address.place.street_address,
+                address:   address.place.street_address,
+                longitude: coords.longitude,
+                latitude:  coords.latitude
+              }
+            }
+            Pictures.save_search(search).success(function(response) {
+              console.log(response);
+            })
+
             setTimeout(function(data) { $scope.$apply($scope.set_pic_data()) }, 500);
           })
         })
