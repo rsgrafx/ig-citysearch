@@ -26,11 +26,11 @@ module Search
   end
 
   def save(options)
-    if options['longitude'].to_s.empty?
-      lat, long= Geocoder.coordinates(options['city_name'])
-      options['longitude'] = long
-      options['latitude'] = lat
-    end
+    # if options['longitude'].to_s.empty?
+    #   lat, long= Geocoder.coordinates(options['city_name'])
+    #   options['longitude'] = long
+    #   options['latitude'] = lat
+    # end
     searchItem = SearchItem.new(options)
     _result = searchItem.save
     searchItem

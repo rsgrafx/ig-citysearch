@@ -76,7 +76,7 @@ angular.module('locations.google', ['ig.citysearch.factories'])
                           location: {
                             city_name: current_city.formatted_address,
                             address: current_city.name,
-                            longitude: (current_city.location.long || ''),
+                            longitude: (current_city.location.lng || ''),
                             latitude: (current_city.location.lat || '')
                           }
                         }
