@@ -1,0 +1,27 @@
+development:
+  sessions:
+    default:
+      database: city_gram_development
+      hosts:
+        - localhost:27017
+      options:
+        consistency: strong
+
+test:
+  sessions:
+    default:
+      database: city_gram_test
+      hosts:
+        - localhost:27017
+      options:
+        consistency: strong
+
+production:
+  sessions:
+    default:
+      uri: <%= ENV['MONGOLAB_URI'] %>
+    database: city_gram_production
+    options:
+      skip_version_check: true
+      safe: true
+      consistency: strong
