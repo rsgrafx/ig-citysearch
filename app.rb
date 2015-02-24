@@ -1,14 +1,40 @@
+$:.unshift File.join(__FILE__, "../lib")
+
 require 'bundler/setup'
 
 Bundler.require
 
-require './lib/setup'
-require './lib/search'
+require 'setup'
+require 'search'
+require 'search_item'
 
 class CityGram < Sinatra::Base
 
   extend Setup
   include Search
+
+  configure :development do
+    require 'pry'
+    Bundler.setup(:default, :assets, :development)
+    set :environment, :development
+    enable :sessions, :logging, :static, :inline_templates, :method_override, :dump_errors, :run
+    Mongoid.load!(File.expand_path(File.join("config", "mongoid.yml")))
+  end
+
+  configure :test do
+    Bundler.setup(:default, :test)
+    set :environment, :test
+    enable :sessions, :static, :inline_templates, :method_override, :raise_errors
+    disable :run, :dump_errors, :logging
+    Mongoid.load!(File.expand_path(File.join("config", "mongoid.yml")))
+  end
+
+  configure :production do
+    Bundler.setup(:default, :production)
+    set :environment, :production
+    enable :sessions, :logging, :static, :inline_templates, :method_override, :dump_errors, :run
+    Mongoid.load!(File.expand_path(File.join("config", "mongoid.yml")))
+  end
 
   Tilt.register Tilt::ERBTemplate, 'html.erb'
   set :static, true
@@ -17,7 +43,7 @@ class CityGram < Sinatra::Base
   initialize_instagram
 
   before do 
-    if request.request_method == "POST"
+    if request.request_method == 'POST'
       body_parameters = request.body.read
       params.merge!(JSON.parse(body_parameters))
     end
@@ -34,7 +60,10 @@ class CityGram < Sinatra::Base
   end
 
   post '/location_name' do
-    json coords: params[:coords]
+    content_type :json
+    searchItem = save(params[:location])
+    json searchItem
+
   end
 
 end
