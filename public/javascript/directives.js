@@ -41,22 +41,32 @@ angular.module('locations.google', ['ig.citysearch.factories'])
                     scope.gPlace = new google.maps.places.Autocomplete(element[0], options);
                     google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
                         var place = scope.gPlace.getPlace();
-
+                        console.log('-------C0ORDINATES')
+                        
                         var current_city = {
                           name: place.name,
                           formatted_address: place.formatted_address,
                           location: {
-                            lat: place.geometry.location.lb,
-                            lng: place.geometry.location.mb
+                            lat: place.geometry.location.k,
+                            lng: place.geometry.location.D
                           }
                         }
+
                         currentCity.setProperty(current_city);
+
                         var address = {
                             title: current_city.formatted_address,
                             place: {
-                              street_address: current_city.formatted_address
+                              street_address: current_city.formatted_address,
+                              longitude: current_city.location.lng,
+                              latitude: current_city.location.lat
                             }
                           }
+                        
+                        console.log(address)
+                        console.log(current_city)
+                        console.log('-------C0ORDINATES')
+ 
                         Pictures.fetch(address).success( function(response) {
                               IGResults.data = response;
                               IGResults.location_title = current_city.formatted_address;
