@@ -23,7 +23,6 @@ production:
       username: <%= ENV['MONGOLAB_USER'] %>
       password: <%= ENV['MONGOLAB_PASSWORD'] %>
       database: <%= ENV['MONGOLAB_DATABASE'] %>
-      uri: <%= ENV['MONGOLAB_URI'] %>
     options:
       skip_version_check: true
       safe: true
