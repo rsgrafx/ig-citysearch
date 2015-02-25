@@ -10,7 +10,7 @@ angular.module('ig.citysearch.factories', []).factory('Pictures', ['$http', '$q'
         headers: 'Content-Type: application/json'
       })
     },
-    location_name: function(coords) {
+    save_search: function(coords) {
       return $http({
         url: '/location_name',
         data: JSON.stringify(coords),
@@ -62,6 +62,18 @@ angular.module('locations.google', ['ig.citysearch.factories'])
                               IGResults.location_title = current_city.formatted_address;
                               setTimeout(function(response) { scope.$apply(scope.set_pic_data()) }, 500);
                         })
+                        var save_search = {
+                          location: {
+                            city_name: current_city.formatted_address,
+                            address: current_city.name,
+                            longitude: (current_city.location.long || ''),
+                            latitude: (current_city.location.lat || '')
+                          }
+                        }
+                        Pictures.save_search(save_search).success(function(response) {
+                          console.log('search saved');
+                          console.log(response);
+                        }) 
                     });
                 }
 

@@ -8,6 +8,13 @@ gem 'instagram'
 gem 'geocoder'
 gem 'puma'
 
+# DataStore
+gem 'mongoid'
+gem 'bson_ext'
+# Caching
+gem 'redis'
+
+
 group :development, :test do
   gem 'dotenv'
   gem 'rspec'

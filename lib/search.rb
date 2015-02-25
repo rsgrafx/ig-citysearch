@@ -1,6 +1,7 @@
+require_relative 'search_item'
+
 module Search
   def search(options)
-
     if options.fetch('coordinates', false)
       lat = options['coordinates']['latitude']
       long = options['coordinates']['longitude']
@@ -23,4 +24,21 @@ module Search
     lat, long= Geocoder.coordinates address
     [lat, long]
   end
+
+  def save(options)
+    if options['longitude'].to_s.empty?
+      lat, long= Geocoder.coordinates(options['city_name'])
+      options['longitude'] = long
+      options['latitude'] = lat
+    end
+    searchItem = SearchItem.new(options)
+    _result = searchItem.save
+    searchItem
+  end
+
+  def reverse_merge(other_hash)
+    other_hash.merge(self)
+  end
+
 end
+
