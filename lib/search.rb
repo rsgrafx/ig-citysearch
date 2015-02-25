@@ -22,6 +22,7 @@ module Search
     _full_address <<','<< @options.fetch('country', '')
 
     if get_coordinates(_full_address).compact.empty?
+      # Ideal for a pick apart algorithm
       get_coordinates('San Pedro Town, Belize, Central America')
     else
       Instagram.client.media_search(@lat, @long)
