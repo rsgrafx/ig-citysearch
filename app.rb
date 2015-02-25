@@ -63,7 +63,6 @@ class CityGram < Sinatra::Base
     content_type :json
     searchItem = save(params[:location])
     json searchItem
-    # binding.pry
   end
 
 end

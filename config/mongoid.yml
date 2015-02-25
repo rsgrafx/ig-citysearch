@@ -6,3 +6,16 @@ production:
       username: <%= ENV['MONGOLAB_USER'] %>
       password: <%= ENV['MONGOLAB_PASSWORD'] %>
       database: <%= ENV['MONGOLAB_DATABASE'] %>
+
+development:
+  sessions:
+    default:
+      database: city_gram_development
+      hosts:
+        - localhost:27017
+test:
+  sessions:
+    default:
+      database: city_gram_test
+      hosts:
+        - localhost:27017
