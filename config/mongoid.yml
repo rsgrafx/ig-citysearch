@@ -1,3 +1,16 @@
+production:
+  sessions:
+    default:
+      hosts:
+        - <%= ENV['MONGOLAB_HOSTS'] %>
+      username: <%= ENV['MONGOLAB_USER'] %>
+      password: <%= ENV['MONGOLAB_PASSWORD'] %>
+      database: <%= ENV['MONGOLAB_DATABASE'] %>
+    options:
+      skip_version_check: true
+      safe: true
+      consistency: strong
+
 development:
   sessions:
     default:
@@ -15,15 +28,3 @@ test:
         - localhost:27017
       options:
         consistency: strong
-
-production:
-  sessions:
-    default:
-      hosts: <%= ENV['MONGOLAB_HOSTS'] %>
-      username: <%= ENV['MONGOLAB_USER'] %>
-      password: <%= ENV['MONGOLAB_PASSWORD'] %>
-      database: <%= ENV['MONGOLAB_DATABASE'] %>
-    options:
-      skip_version_check: true
-      safe: true
-      consistency: strong
