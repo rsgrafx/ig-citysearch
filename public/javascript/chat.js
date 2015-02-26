@@ -6,7 +6,7 @@ window.onload = function(){
 
     var ws       = new WebSocket('ws://' + window.location.host + window.location.pathname);
     ws.onopen    = function()  { console.log('websocket opened'); };
-    ws.onclose   = function()  { show('Shout Outs closed'); }
+    ws.onclose   = function()  { console.log('Shout Outs closed'); }
     ws.onmessage = function(m) { show('YOFrom#: ' +  m.data); };
 
     var sender = function(f){
