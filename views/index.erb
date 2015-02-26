@@ -9,6 +9,7 @@
 </head>
 <body ng-app='CityGram'>
   <a href="https://github.com/rsgrafx/ig-citysearch" target="_blank" class="hidden-xs hidden-sm"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:9999;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+
   <nav class='top-bar'>
     <ul class='title-area'>
       <li class='name'><h1><a href="#">City Gram</a></h1></li>
@@ -25,57 +26,67 @@
     </section>
   </nav>
 
-  <div ng-controller='SearchCtrl' id='events_holder' class='row'>
-    <form>
-      <div class='large-12 columns'>
-        <label> <h4>Instagrams Near: {{ location_title }}</h4>
-        </label>
-      </div>
-    </form>
+  <div id='events_holder'>
+    <div class='main'>
+      <div class='ig-list large-9 medium-8 columns' ng-controller='SearchCtrl'>
+        <div>
+          <label> <h4>Instagrams Near: {{ location_title }}</h4></label>
+        </div>
 
-    <div class='row ig-list'>
       <div ng-repeat='pic in picture_results' class='ig-card large-2 small-10'>
-        <a href="#" data-reveal-id="iGModal" ng-click=individualIGimage(pic.id)>
-          <img ng-src={{pic.images.low_resolution.url}} />
-            <span class='eye'>              
+        <div>
+          <span class='eye'>
               <small>@{{pic.user.username}}.</small>
-            </span>
-          </a>
-        <span class='hover-image-details'>
-          <small class='.text-left'>
-            <a href='#' data-reveal-id="firstModal" ng-click=individualIGimage(pic.id) > {{pic.caption.text}} </a></small>
           </span>
+          <a href="#" data-reveal-id="iGModal" ng-click=individualIGimage(pic.id)>
+            <img ng-src={{pic.images.low_resolution.url}} />
+          </a>
+          <span class='hover-image-details'>
+            <small class='text-left'>
+              <a href='#' data-reveal-id="firstModal" ng-click=individualIGimage(pic.id) > {{pic.caption.text}} </a>
+            </small>
+          </span>
+        </div>
       </div>
-    </div> 
 
-    <div id="iGModal" class="reveal-modal" data-reveal>
-      <nav>
-        <div class='next'><a href="#" ng-click=nextItem() >
-          <img ng-src="images/arrow-forward-icon.png"></a>
-        </div>
-        <div class='previous '><a href="#" ng-click=previousItem() >
-          <img ng-src="images/arrow-rewind-icon.png"></a>
-        </div>
-      </nav>
-      
-      <div class="row">
-        <div class="large-8 columns">
-          <img ng-src={{loadedImage.images.standard_resolution.url}} />
-        </div>
-        <div class="large-4 columns">
+      <section id="iGModal" class="reveal-modal" data-reveal>
+        <nav>
+          <div class='next'><a href="#" ng-click=nextItem() >
+            <img ng-src="images/arrow-forward-icon.png"></a>
+          </div>
+          <div class='previous '><a href="#" ng-click=previousItem() >
+            <img ng-src="images/arrow-rewind-icon.png"></a>
+          </div>
+        </nav>
+        <div class="row">
+          <div class="large-8 columns">
+            <img ng-src={{loadedImage.images.standard_resolution.url}} />
+          </div>
+          <div class="large-4 columns">
             <img ng-src={{loadedImage.user.profile_picture}} class='profile_picture' />
             <h4 class='subheader'>
                 {{loadedImage.user.username}}
             </h4>
-          <p class='caption'>{{loadedImage.caption.text}}</p>
-          <div map></div>
+            <p class='caption'>{{loadedImage.caption.text}}</p>
+            <div map></div>
+          </div>
         </div>
-        
-    </div>
-      <a class="close-reveal-modal">&#215;</a>
+        <a class="close-reveal-modal">&#215;</a>
+      </section>
+    <!-- close  -->
     </div>
 
-<!-- end of controller div.  -->
+    <div class='large-3 medium-4 pull-1 columns' id='chat-panel'>
+      <div class='hide-for-small'>
+        <b>Represent!</b>
+          <form id="chat-form" action='/chat'>
+            <input type="text" id="input" value="send a message"></input>
+          </form>
+        <div id="msgs"></div>
+      </div>
+    </div>
+    
+    </div>
   </div>
 
   <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.js'></script>
@@ -85,6 +96,7 @@
   <script src='javascript/app.js'></script>
   <script src='javascript/directives.js'></script>
   <script src='javascript/map.directive.js'></script>
+  <script src='javascript/chat.js'></script>
   
   <script>
       $(document).foundation();
