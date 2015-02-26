@@ -38,6 +38,7 @@ class CityGram < Sinatra::Base
 
   Tilt.register Tilt::ERBTemplate, 'html.erb'
   set :static, true
+  set :sockets, []
   set :public_folder, File.expand_path(File.dirname(__FILE__)) + '/public'
 
   initialize_instagram
@@ -49,9 +50,9 @@ class CityGram < Sinatra::Base
     end
   end
   
-  get '/' do
-    erb :index
-  end
+  # get '/' do
+  #   erb :index
+  # end
 
   # http -f POST localhost:9393/recent_pics? [place]street_address='San Ignacio Town, Belize'
   post '/recent_pictures' do
@@ -65,4 +66,23 @@ class CityGram < Sinatra::Base
     json searchItem
   end
 
+  get '/' do
+    if !request.websocket?
+      erb :index
+    else
+      request.websocket do |ws|
+        ws.onopen do
+          ws.send("Say Hi!")
+          settings.sockets << ws
+        end
+        ws.onmessage do |msg|
+          EM.next_tick { settings.sockets.each{|s| s.send(msg) } }
+        end
+        ws.onclose do
+          warn("websocket closed")
+          settings.sockets.delete(ws)
+        end
+      end
+    end
+  end 
 end
