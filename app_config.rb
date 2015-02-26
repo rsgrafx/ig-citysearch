@@ -16,6 +16,7 @@ class CityGram < Sinatra::Base
     set :environment, :development
     enable :sessions, :logging, :static, :inline_templates, :method_override, :dump_errors, :run
     Mongoid.load!(File.expand_path(File.join("config", "mongoid.yml")))
+    REDIS = Redis.new
   end
 
   configure :test do
@@ -31,6 +32,8 @@ class CityGram < Sinatra::Base
     set :environment, :production
     enable :sessions, :logging, :static, :inline_templates, :method_override, :dump_errors, :run
     Mongoid.load!(File.expand_path(File.join("config", "mongoid.yml")))
+    uri = URI.parse(ENV["REDISTOGO_URL"])
+    REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
   end
 
 end

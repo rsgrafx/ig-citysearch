@@ -18,7 +18,7 @@ window.onload = function(){
     }
     ws.onmessage = function(m) { 
       var msg = JSON.parse(m.data);
-      console.log('websocket Onmessage'); 
+      console.log(msg); 
       show(msg.sender+":> "+msg.message); 
     };
 

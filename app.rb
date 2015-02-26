@@ -12,9 +12,6 @@ class CityGram
 
   initialize_instagram
 
-  uri = URI.parse(ENV["REDISTOGO_URL"])
-  REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
-
   set :redis, REDIS
   set(:watcher, Thread.new do
     redis = Redis.new
@@ -36,7 +33,6 @@ class CityGram
   end
 
   # http -f POST localhost:9393/recent_pics? [place]street_address='San Ignacio Town, Belize'
-
   post '/recent_pictures' do
     content_type :json
     json search(params[:place])
@@ -59,9 +55,7 @@ class CityGram
         end
 
         ws.onmessage do |msg|
-          # binding.pry
           settings.redis.publish 'chat_screen', msg
-          # EM.next_tick { settings.sockets.each{|s| s.send(msg) } }
         end
 
         ws.onclose do
