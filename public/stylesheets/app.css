@@ -80,7 +80,12 @@ p.caption {
   left: -60px;
   top: 200px;
 }
+#chat-form {
+  padding-top: 50px;
+}
 #chat-panel {
   height: 100%;
   background: #ddd;
+  position: fixed;
+  top: 0px
 }
