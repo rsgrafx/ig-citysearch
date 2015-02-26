@@ -1,0 +1,3 @@
+web: rackup -s thin -p $PORT
+mongo: mongod
+redis: redis-server
