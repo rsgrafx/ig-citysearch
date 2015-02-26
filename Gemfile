@@ -7,7 +7,7 @@ gem 'sinatra-contrib'
 
 gem 'instagram'
 gem 'geocoder'
-gem 'puma'
+gem 'thin'
 
 # DataStore
 gem 'mongoid'
