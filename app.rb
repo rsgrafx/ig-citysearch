@@ -51,11 +51,12 @@ class CityGram
     else
       request.websocket do |ws|
         ws.onopen do
-          ws.send("Say Hi!")
+          ws.send( {'sender' => 'CityGram', message: 'Give a Shout Out!'}.to_json )
           settings.watcher['sockets'] << ws
         end
 
         ws.onmessage do |msg|
+          # binding.pry
           settings.redis.publish 'chat_screen', msg
           # EM.next_tick { settings.sockets.each{|s| s.send(msg) } }
         end

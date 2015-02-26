@@ -4,8 +4,6 @@ var CityGram = angular.module('CityGram', ['locations.google', 'ig.citysearch.fa
 
 CityGram.controller('NavSearchCtrl', ['$scope', 'IGResults', function($scope, IGResults) {
   var container = this;
-  // console.log(container.search)
-
   $scope.set_pic_data = function() {
     console.log('Sharing Data.')
   }
@@ -98,7 +96,7 @@ CityGram.controller('SearchCtrl',
     window.navigator.geolocation.getCurrentPosition( function(position) {
         $scope.$apply(function() {
 
-          site_home.position = position; console.log(position)
+          site_home.position = position; 
           var geocoder, address;
 
           var coords = { 
@@ -131,6 +129,26 @@ CityGram.controller('SearchCtrl',
             IGResults.location_title = address.place.street_address;
             IGResults.data = data;
 
+
+            $scope.setChatLocation = function(address) { 
+              var items= address.place.street_address.split(',');
+              var last_item = items[items.length - 1];
+              
+              var search = {
+              short_name: last_item,
+              location: {
+                city_name: address.place.street_address,
+                address:   address.place.street_address,
+                longitude: coords.longitude,
+                latitude:  coords.latitude
+                }
+              }
+              document.ChatLocation = search;
+           }(address);
+
+
+            console.log($scope.sNameList)
+            // var sName = sNameList[sNameList.length - 1]
             var search = {
               location: {
                 city_name: address.place.street_address,
@@ -139,10 +157,10 @@ CityGram.controller('SearchCtrl',
                 latitude:  coords.latitude
               }
             }
+            console.log(document.ChatLocation)
             Pictures.save_search(search).success(function(response) {
               console.log(response);
             })
-
             setTimeout(function(data) { $scope.$apply($scope.set_pic_data()) }, 500);
           })
         })

@@ -9,20 +9,51 @@ window.onload = function(){
     }
 
     var ws       = new WebSocket('ws://' + window.location.host + window.location.pathname);
-    ws.onopen    = function()  { console.log('websocket opened'); };
-    ws.onclose   = function()  { //console.log('Shout Outs closed'); 
+    ws.onopen    = function()  { 
+      console.log('websocket opened'); 
+    };
+    ws.onclose   = function()  { 
+    //console.log('Shout Outs closed'); 
       disable_form()
     }
-    ws.onmessage = function(m) { show('YO From#: ' +  m.data); };
+    ws.onmessage = function(m) { 
+      var msg = JSON.parse(m.data);
+      console.log('websocket Onmessage'); 
+      show(msg.sender+":> "+msg.message); 
+    };
 
     var sender = function(f){
       var input     = document.getElementById('input');
       input.onclick = function(){ input.value = "" };
       f.onsubmit    = function(){
+        console.log(document.ChatLocation)
         ws.send(input.value);
         input.value = "send a message";
         return false;
       }
-    }(document.getElementById('chat-form'));
+    };
+
+    var msg = '';
+    // var location = $('location-data-id').val()
+    var msgObj = {
+      sender: '',
+      location: '',
+      message: msg
+    }
+
+    var send_chat_msg = function(f, msgObj) {
+      var input     = document.getElementById('input');
+      input.onclick = function(){ input.value = "" };
+      f.onsubmit    = function() {
+
+        msgObj.sender   = document.ChatLocation.short_name
+        msgObj.location = document.ChatLocation.location.address
+        msgObj.message = input.value
+
+        ws.send(JSON.stringify(msgObj));
+        input.value = 'Where ya At?!'
+      }
+    }(document.getElementById('chat-form'), msgObj)
+
   })();
 }
