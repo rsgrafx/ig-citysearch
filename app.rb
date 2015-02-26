@@ -1,47 +1,29 @@
-$:.unshift File.join(__FILE__, "../lib")
+require_relative 'app_config'
 
-require 'bundler/setup'
-
-Bundler.require
-
-require 'setup'
-require 'search'
-require 'search_item'
-
-class CityGram < Sinatra::Base
+class CityGram
 
   extend Setup
   include Search
 
-  configure :development do
-    require 'pry'
-    Bundler.setup(:default, :assets, :development)
-    set :environment, :development
-    enable :sessions, :logging, :static, :inline_templates, :method_override, :dump_errors, :run
-    Mongoid.load!(File.expand_path(File.join("config", "mongoid.yml")))
-  end
-
-  configure :test do
-    Bundler.setup(:default, :test)
-    set :environment, :test
-    enable :sessions, :static, :inline_templates, :method_override, :raise_errors
-    disable :run, :dump_errors, :logging
-    Mongoid.load!(File.expand_path(File.join("config", "mongoid.yml")))
-  end
-
-  configure :production do
-    Bundler.setup(:default, :production)
-    set :environment, :production
-    enable :sessions, :logging, :static, :inline_templates, :method_override, :dump_errors, :run
-    Mongoid.load!(File.expand_path(File.join("config", "mongoid.yml")))
-  end
-
   Tilt.register Tilt::ERBTemplate, 'html.erb'
   set :static, true
-  set :sockets, []
+  # set :sockets, []
   set :public_folder, File.expand_path(File.dirname(__FILE__)) + '/public'
 
   initialize_instagram
+
+  set :redis, Redis.new
+  set(:watcher, Thread.new do
+    redis = Redis.new
+    Thread.current['sockets'] = []
+    redis.subscribe 'chat_screen' do |on|
+      on.message do |channel, message|
+        Thread.current['sockets'].each do |s|
+          s.send message
+        end
+      end
+    end
+  end)
 
   before do 
     if request.request_method == 'POST'
@@ -49,13 +31,9 @@ class CityGram < Sinatra::Base
       params.merge!(JSON.parse(body_parameters))
     end
   end
-  
-  # get '/' do
-  #   erb :index
-  # end
 
   # http -f POST localhost:9393/recent_pics? [place]street_address='San Ignacio Town, Belize'
-  
+
   post '/recent_pictures' do
     content_type :json
     json search(params[:place])
@@ -74,14 +52,18 @@ class CityGram < Sinatra::Base
       request.websocket do |ws|
         ws.onopen do
           ws.send("Say Hi!")
-          settings.sockets << ws
+          settings.watcher['sockets'] << ws
         end
+
         ws.onmessage do |msg|
-          EM.next_tick { settings.sockets.each{|s| s.send(msg) } }
+          settings.redis.publish 'chat_screen', msg
+          # EM.next_tick { settings.sockets.each{|s| s.send(msg) } }
         end
+
         ws.onclose do
           warn("websocket closed")
-          settings.sockets.delete(ws)
+          settings.watcher['sockets'].delete(ws)
+          # settings.sockets.delete(ws)
         end
       end
     end
