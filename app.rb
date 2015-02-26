@@ -12,7 +12,10 @@ class CityGram
 
   initialize_instagram
 
-  set :redis, Redis.new
+  uri = URI.parse(ENV["REDISTOGO_URL"])
+  REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+
+  set :redis, REDIS
   set(:watcher, Thread.new do
     redis = Redis.new
     Thread.current['sockets'] = []
