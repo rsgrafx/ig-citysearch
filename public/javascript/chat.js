@@ -9,8 +9,11 @@ window.onload = function(){
     var disable_form = function(el) {
       $('#chat-form input').prop('disabled', true).val('Shout outs unavailable at this time.')
     }
-                              // ws://+ window.location.host + window.location.pathname
-    var ws       = new WebSocket('ws://localhost:8900/');
+    /* 
+      new Websocket('ws://' + window.location.host + window.location.pathname)
+      new Websocket('ws://test.orionengleton.com')
+    */
+    var ws       = new WebSocket('ws://city-gram-chat.herokuapp.com/');
     ws.onopen    = function()  { 
       console.log('websocket opened'); 
     };
