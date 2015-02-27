@@ -1,3 +1,5 @@
+// http://stackoverflow.com/questions/13546424/how-to-wait-for-a-websockets-readystate-to-change
+
 window.onload = function(){
   (function(){
     var show = function(el){
@@ -7,8 +9,8 @@ window.onload = function(){
     var disable_form = function(el) {
       $('#chat-form input').prop('disabled', true);
     }
-
-    var ws       = new WebSocket('ws://' + window.location.host + window.location.pathname);
+                              // ws://+ window.location.host + window.location.pathname
+    var ws       = new WebSocket('ws://test.orionengleton.com');
     ws.onopen    = function()  { 
       console.log('websocket opened'); 
     };
@@ -32,9 +34,9 @@ window.onload = function(){
         return false;
       }
     };
-
     var msg = '';
     // var location = $('location-data-id').val()
+
     var msgObj = {
       sender: '',
       location: '',
@@ -46,7 +48,7 @@ window.onload = function(){
       input.onclick = function(){ input.value = "" };
       f.onsubmit    = function() {
 
-        msgObj.sender   = document.ChatLocation.short_name
+        msgObj.sender   = document.ChatLocation.short_name;
         msgObj.location = document.ChatLocation.location.address
         msgObj.message = input.value
 
