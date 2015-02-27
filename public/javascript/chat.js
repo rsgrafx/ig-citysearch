@@ -7,10 +7,10 @@ window.onload = function(){
     }(document.getElementById('msgs'));
 
     var disable_form = function(el) {
-      $('#chat-form input').prop('disabled', true);
+      $('#chat-form input').prop('disabled', true).val('Shout outs unavailable at this time.')
     }
                               // ws://+ window.location.host + window.location.pathname
-    var ws       = new WebSocket('ws://test.orionengleton.com');
+    var ws       = new WebSocket('ws://localhost:8900/');
     ws.onopen    = function()  { 
       console.log('websocket opened'); 
     };
